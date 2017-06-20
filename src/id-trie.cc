@@ -32,26 +32,25 @@ typedef unsigned long ulong;
 
 class Child{    //next node id and flag if terminated
   
-  ulong data;
-  
-  static const ulong MSB = ((ulong)-1) / 2 + 1;
+  ulong _id;
+  int _value;
 
   public:
   
   int is_term(){
-    return (data & MSB) > 0;
+    return _value > 0;
   }
   
   void set_term(){
-    data |= MSB;
+    _value = 1;
   }
   
   ulong id(){
-    return data & ~MSB;
+    return _id;
   }
   
   void set_id(int id){
-    data |= id;
+    _id = id;
   }
   
 };

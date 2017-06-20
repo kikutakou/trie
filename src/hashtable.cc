@@ -25,7 +25,13 @@ ulong str_hash(const char *str){
 }
 
 
-typedef vector<string> Node;
+typedef struct data{
+  string str;
+  int value;
+} data;
+
+
+typedef vector<data> Node;
 
 class HashTable{
 	Node* table;
@@ -42,16 +48,16 @@ public:
     Node &node = table[h];
     
     for (int i = 0; i < node.size(); i++) {
-      if(strcmp(node[i].c_str(), key) == 0) return;
+      if(strcmp(node[i].str.c_str(), key) == 0) return;
     }
-    node.push_back(string(key));
+    node.push_back((struct data){string(key), 1});
 	}
 	
-	bool search(const char* key){
+	int search(const char* key){
 		ulong h = str_hash(key);
     Node &node = table[h];
     for (int i = 0; i < node.size(); i++) {
-      if(strcmp(node[i].c_str(), key) == 0) return true;
+      if(strcmp(node[i].str.c_str(), key) == 0) return node[i].value;
     }
     if(debug) printf("key = %s, hash = %lu\n", key, h);
 
@@ -62,7 +68,7 @@ public:
     for (int i = 0; i < HASH_SPACE; i++) {
       Node& node = table[i];
       for (int j = 0; j < node.size(); j++) {
-        printf("table[%d][%d] = %s\n", i, j, node[j].c_str());
+        printf("table[%d][%d] = %s\n", i, j, node[j].str.c_str());
       }
     }
   }
